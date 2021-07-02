@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block sold %}active{% endblock sold %}
+
+{% block title %}Sold products | Saptarangi Computers{% endblock title %}
+
+{% block main %}
+<div class="container">
+   <h1>Sold products</h1>
+   <hr>
+   <div class="items">
+   {% for item in items %}
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">Added Date: {{item.added_date}} , Sold date: {{item.sold_date}}</strong>
+          <h3 class="mb-0">{{item.name}}</h3>
+          <div class="mb-1 text-muted">Cost price: {{item.cost_price}}</div>
+          <div class="mb-1 text-muted">Marked price: {{item.marked_price}}</div>
+          <div class="mb-1 text-muted">Sold price: {{item.sold_price}}</div>
+          <p class="card-text mb-auto">{{item.extra_information}}</p>
+          <a>Buyed from : {{item.buyed_party}}</a>
+          <a>Sold to : {{item.sold_party}}</a>
+        </div>
+        <div style="display:flex; justify-content: flex-start;" class="mb-3 mx-3">
+         <form action="/home/deleteproduct" method="post">{% csrf_token %}
+            <input type="hidden" name="sno" value="{{item.sno}}">
+            <input type="hidden" name="type" value="sold">
+        <button class="btn btn-outline-danger">Remove</button>
+        </form>
+        </div>
+      </div>
+   {% endfor %}
+   </div>
+</div>
+{% endblock main %}

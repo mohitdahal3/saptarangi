@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block available %}active{% endblock available %}
+
+{% block title %}Available products | Saptarangi Computers{% endblock title %}
+
+{% block main %}
+<div class="container my-3">
+   <div style="display:flex;justify-content:center;">
+      <h1>Available products</h1>
+   </div>
+   <hr>
+   <div class="items">
+      {% for item in items %}
+      <div style="width: 33%;display:inline-block;" class="item">
+         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+               <strong class="d-inline-block mb-2 text-primary">Added date: {{item.added_date}}</strong>
+               <h3 class="mb-0">{{item.name}}</h3>
+               <div class="mb-1 text-muted">CP:{{item.cost_price}} , MP:{{item.marked_price}}</div>
+               <p class="text-muted mb-auto">Stock: {{item.stock}}</p>
+               {% if item.extra_information|length > 30 %}
+               <p class="card-text mb-auto">{{item.extra_information|slice:":30" }}...</p>
+               {% else %}
+               <p class="card-text mb-auto">{{item.extra_information}}</p>
+               {% endif %}
+               <a style="text-decoration: underline;">{{item.buyed_party}}</a>
+               <div class="mt-2" style="display:flex; justify-content:center; flex-direction:row;">
+                  <a href="/home/view-product-{{item.sno}}" class="btn btn-outline-danger">View product</a>
+               </div>
+            </div>
+
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+   <hr>
+   <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addproducts">Add products</button>
+</div>
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="addproducts" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+   aria-labelledby="staticBackdropLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Add products</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <form action="/home/addavailable" method="post">{% csrf_token %}
+               <div class="mb-3">
+                  <label for="formGroupExampleInput" class="form-label">Name</label>
+                  <input required type="text" name="name" class="form-control" id="formGroupExampleInput">
+               </div>
+               <div class="mb-3">
+                  <label for="formGroupExampleInput" class="form-label">Added date</label>
+                  <input required type="date" name="adate" class="form-control" id="formGroupExampleInput">
+                </div>
+
+                <div class="row">
+                  <div class="col-4">
+                    <input required type="number" name="cp" class="form-control" placeholder="Cost price" aria-label="First name">
+                  </div>
+                  <div class="col-4">
+                    <input required type="number" name="mp" class="form-control" placeholder="Marked price" aria-label="Last name">
+                  </div>
+                  <div class="col-4">
+                    <input required type="number" name="stock" class="form-control" placeholder="Stock" aria-label="Last name">
+                  </div>
+                  <div class="mb-3 my-2">
+                     <label for="formGroupExampleInput" class="form-label">Buyed party</label>
+                     <input required type="text" name="b-party" class="form-control" id="formGroupExampleInput">
+                   </div>
+
+                   <div class="mb-3 form-floating">
+                     <textarea name="info" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                     <label for="floatingTextarea">Extra information</label>
+                   </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Add</button>
+               </div>
+            </form>
+         </div>
+         
+      </div>
+   </div>
+</div>
+{% endblock main %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+{% block home %}active{% endblock home %}
+{% block main %}
+   <div class="container my-3">
+   <div style="display:flex; justify-content:center;"class="flex-box">
+      <h1>All products</h1>
+
+   </div>
+   <hr>
+   <div class="items">
+      {% for item in availableitems %}
+         <div class="item">
+            
+         </div>
+      {% endfor %}
+   </div>
+</div>
+{% endblock main %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}View Products{% endblock title %}
+
+{% block main %}
+<div class="container">
+   <div class="px-4 pt-5 my-5 text-center border-bottom">
+      <strong class="d-inline-block mb-2 text-primary">{{item.added_date}}</strong>
+
+      <h1 class="display-4 fw-bold">{{item.name}}</h1>
+      <div class="mb-1 text-muted">Cost price: {{item.cost_price}}</div>
+      <div class="mb-1 text-muted">Marked price: {{item.marked_price}}</div>
+      <div class="mb-1 text-muted">Stock: {{item.stock}}</div>
+      <div class="col-lg-6 mx-auto">
+
+         <p style="overflow:auto;">{{item.extra_information}}</p>
+
+         <p class="lead mb-4">{{item.buyed_party}}</p>
+         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+            <form action="/home/deleteproduct" method="post">{% csrf_token %}
+               <input type="hidden" name="sno" value="{{item.sno}}">
+               <input type="hidden" name="type" value="available">
+               <button type="submit" class="btn btn-outline-danger btn-lg px-4 me-sm-3">Delete product</button>
+            </form>
+
+            <button type="submit" class="btn btn-success btn-lg px-4" data-bs-toggle="modal" data-bs-target="#sell">Sell
+               product</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="sell" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Sell product</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <form action="/home/sellproducts" method="post">{% csrf_token %}
+               <input type="hidden" name="sno" value="{{item.sno}}">
+               <div class="mb-3">
+                  <label for="formGroupExampleInput" class="form-label">Sold price</label>
+                  <input required type="number" name="sp" class="form-control" id="formGroupExampleInput">
+               </div>
+               <div class="mb-3">
+                  <label for="formGroupExampleInput" class="form-label">Sold date</label>
+                  <input required type="date" name="date" class="form-control" id="formGroupExampleInput">
+               </div>
+               <div class="mb-3">
+                  <label for="formGroupExampleInput" class="form-label">Sold party</label>
+                  <input required type="text" name="sold_party" class="form-control" id="formGroupExampleInput">
+               </div>
+               <div class="mb-3">
+                  <div class="form-floating">
+                     <textarea name="extra_information" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                     <label for="floatingTextarea">Extra information</label>
+                   </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Sell</button>
+               </div>
+            </form>
+
+         </div>
+      </div>
+   </div>
+</div>
+
+{% endblock main %}
