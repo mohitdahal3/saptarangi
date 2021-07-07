@@ -1,6 +1,8 @@
 
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('', views.home , name="home"),
     path('available-products' , views.available , name = "available"),
@@ -10,4 +12,4 @@ urlpatterns = [
     path('deleteproduct' , views.deleteproduct , name="delete"),
     path('sellproducts' , views.sellproducts , name="sellproducts"),
     path('search-<str:slug>' , views.search , name="search")
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
