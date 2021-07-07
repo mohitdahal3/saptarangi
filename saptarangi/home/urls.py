@@ -9,4 +9,5 @@ urlpatterns = [
     path('addavailable' , views.addavailable , name = "addavailable"),
     path('deleteproduct' , views.deleteproduct , name="delete"),
     path('sellproducts' , views.sellproducts , name="sellproducts"),
+    path('search-<str:slug>' , views.search , name="search")
 ]

@@ -78,3 +78,25 @@ def sellproducts(request):
          product.delete()
       return redirect('/home/sold-products')      
    return HttpResponse('bad request')   
+
+
+def search(request , slug):
+   if request.method == "POST":
+      query = request.POST.get('query' , '')
+      if(slug == "available"):
+         allprods = Available_product.objects.all()
+         prods = []
+         for item in allprods:
+            if (query.lower() in item.name.lower() or query.lower() in item.buyed_party.lower() or query.lower() in item.extra_information.lower()):
+               prods.append(item)
+         print(query)      
+         return render(request , 'home/search.html' , {'query':query , "items":prods , "slug" : 1})      
+      elif slug == "sold":   
+         allprods = Sold_product.objects.all()
+         prods = []
+         for item in allprods:
+            if (query.lower() in item.name.lower() or query.lower() in item.buyed_party.lower() or query.lower() in item.extra_information.lower()):
+               prods.append(item)
+         print(query)      
+         return render(request , 'home/search.html' , {'query':query , "items":prods , "slug" : 2})      
+   return HttpResponse('bad request')

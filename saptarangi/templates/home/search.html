@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 
-{% block sold %}active{% endblock sold %}
+{% block title %}{{query}} | search{% endblock title %}
 
-{% block title %}Sold products | Saptarangi Computers{% endblock title %}
-{% block search %}sold{% endblock search %}
-{% block search1 %}sold products{% endblock search1 %}
+
+
+
 {% block main %}
-<div class="container">
-   <h1>Sold products</h1>
+   <div class="container">
+   <h1>Search results for "{{query}}"</h1>
    <hr>
    <div class="items">
+   {% if slug == 2 %}
    {% for item in items %}
       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
@@ -31,6 +32,27 @@
         </div>
       </div>
    {% endfor %}
+   {% elif slug == 1%}
+   {% for item in items %}
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">Added Date: {{item.added_date}}</strong>
+          <h3 class="mb-0">{{item.name}}</h3>
+          <div class="mb-1 text-muted">Cost price: {{item.cost_price}}</div>
+          <div class="mb-1 text-muted">Marked price: {{item.marked_price}}</div>
+          <p class="text-muted mb-auto">Stock: {{item.stock}}</p>
+          <p class="card-text mb-auto">{{item.extra_information}}</p>
+          <a>Buyed from : {{item.buyed_party}}</a>
+        </div>
+        <div style="display:flex; justify-content: flex-start;" class="mb-3 mx-3">
+         <div class="mt-2" style="display:flex; justify-content:center; flex-direction:row;">
+                  <a href="/home/view-product-{{item.sno}}" class="btn btn-outline-danger">View product</a>
+               </div>
+        </div>
+      </div>
+      {% endfor %}
+   {% endif %}
    </div>
 </div>
+
 {% endblock main %}

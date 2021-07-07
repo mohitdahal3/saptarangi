@@ -29,8 +29,8 @@
         </li>
         
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <form action = "/home/search-{% block search %}{% endblock search %}" method="POST" class="d-flex">{% csrf_token %}
+        <input name="query" class="form-control me-2" type="search" placeholder="Search {% block search1 %}{% endblock search1 %}" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
