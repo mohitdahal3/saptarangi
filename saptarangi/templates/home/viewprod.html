@@ -17,13 +17,13 @@
 
          <p class="lead mb-4">{{item.buyed_party}}</p>
          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-            <form action="/home/deleteproduct" method="post">{% csrf_token %}
+            <form id="deleteform" action="/home/deleteproduct" method="post">{% csrf_token %}
                <input type="hidden" name="sno" value="{{item.sno}}">
                <input type="hidden" name="type" value="available">
-               <button type="submit" class="btn btn-outline-danger btn-lg px-4 me-sm-3">Delete product</button>
             </form>
+            <button id="danger" class="btn btn-outline-danger btn-lg px-4 me-sm-3">Delete product</button>
 
-            <button type="submit" class="btn btn-success btn-lg px-4" data-bs-toggle="modal" data-bs-target="#sell">Sell
+            <button class="btn btn-success btn-lg px-4" data-bs-toggle="modal" data-bs-target="#sell">Sell
                product</button>
          </div>
       </div>
@@ -73,3 +73,16 @@
 </div>
 
 {% endblock main %}
+
+
+{% block js %}
+   <script>
+      $('#danger').click(()=>{
+         let value = confirm('Do you really want to delete this product? If you click on "OK" then this product will be deleted with all its stock and informations!')
+         if(value){
+            $('#deleteform').submit()
+         }
+      })
+
+   </script>
+{% endblock js %}

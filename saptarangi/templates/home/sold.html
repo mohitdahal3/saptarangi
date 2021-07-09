@@ -22,15 +22,28 @@
           <a>Buyed from : {{item.buyed_party}}</a>
           <a>Sold to : {{item.sold_party}}</a>
         </div>
-        <div style="display:flex; justify-content: flex-start;" class="mb-3 mx-3">
-         <form action="/home/deleteproduct" method="post">{% csrf_token %}
+        <div style="display:flex; justify-content: flex-start;" class="mb-3 mx-3 ">
+         <form class="{{item.sno}}" action="/home/deleteproduct" method="post">{% csrf_token %}
             <input type="hidden" name="sno" value="{{item.sno}}">
             <input type="hidden" name="type" value="sold">
-        <button class="btn btn-outline-danger">Remove</button>
         </form>
+        <button id="{{item.sno}}" class="btn btn-outline-danger remove">Remove</button>
         </div>
       </div>
    {% endfor %}
    </div>
 </div>
 {% endblock main %}
+
+
+{% block js %}
+   <script>
+      $('.remove').click((event)=>{
+         let value = confirm('If you remove this, then this information never comes back!')
+         if(value){
+            $(`.${event.target.id}`)[0].submit()
+         }
+      })
+
+   </script>
+{% endblock js %}
